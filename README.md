@@ -5,6 +5,15 @@ Projeto para estudo de aplicação para estudo do uso do design pattern Change D
 ## Sumário
 
 
+
+## Tecnologias
+
+- Microsoft SQL Server
+- Apache Kafka 3.5
+- Kafka Connectors
+- **(A definir linguagem de programação dos serviços)**
+
+
 ## Arquitetura de Software para Desenvolvimento
 
 Todos os projetos desenvolvidos no estudo irão seguir o design arquitetural da Arquitetura Hexagonal, afim de pratica a separação dos componentes internos e externos da camada de negócio. Os projetos terão a estrutura do desenho a seguir:
