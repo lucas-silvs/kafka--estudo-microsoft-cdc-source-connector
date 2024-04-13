@@ -106,6 +106,8 @@ Para acessar o banco de dados, está sendo utilizado o [DBeaver](https://dbeaver
 - [Hexagonal Architeture by netflixtechblog](https://netflixtechblog.com/ready-for-changes-with-hexagonal-architecture-b315ec967749)
 - [C4 Model](https://c4model.com/)
 
+- [SQL Server on Linux on Kubernetes: Part 1](https://www.phillipsj.net/posts/sql-server-on-linux-on-kubernetes-part-1/)
+
 
 
 
