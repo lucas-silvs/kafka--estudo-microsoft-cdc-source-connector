@@ -7,12 +7,11 @@ Projeto para estudo de aplicação para estudo do uso do design pattern Change D
 - [Arquitetura de Software para Desenvolvimento](#arquitetura-de-software-para-desenvolvimento)
 - [Arquitetura dos componentes](#arquitetura-dos-componentes)
     - [service--userdata](#service--userdata)
-    - [userdata](#userdata)
-    - [Kafka Source Connector](#kafka-source-connector)
-    - [cdc.info-user](#cdcinfouser)
     - [service--push-email](#service--push-email)
+- [Criação banco de dados](#criação-banco-de-dados)
+    - [Kubernetes](#kubernetes)
+        - [Acessar o banco de dados](#acessar-o-banco-de-dados)
 - [Referencias](#referencias)
-
 
 ## Tecnologias
 
@@ -107,7 +106,3 @@ Para acessar o banco de dados, está sendo utilizado o [DBeaver](https://dbeaver
 - [C4 Model](https://c4model.com/)
 
 - [SQL Server on Linux on Kubernetes: Part 1](https://www.phillipsj.net/posts/sql-server-on-linux-on-kubernetes-part-1/)
-
-
-
-
