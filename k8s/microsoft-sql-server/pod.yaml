@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: mssql
+  labels:
+    run: mssql
+  name: mssql
+spec:
+  containers:
+  - image: mcr.microsoft.com/mssql/server
+    name: mssql
+    env:
+    - name: ACCEPT_EULA
+      value: "Y"
+    - name: SA_PASSWORD
+      value: Passw0rd!
+    - name: MSSQL_PID
+      value: developer
+    ports:
+    - containerPort: 1433
+      name: mssql
+    # resources:
+    #   limits:
+    #     cpu: "1"
+    #     memory: "1Gi"

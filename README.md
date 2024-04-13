@@ -3,7 +3,15 @@ Projeto para estudo de aplicação para estudo do uso do design pattern Change D
 
 
 ## Sumário
-
+- [Tecnologias](#tecnologias)
+- [Arquitetura de Software para Desenvolvimento](#arquitetura-de-software-para-desenvolvimento)
+- [Arquitetura dos componentes](#arquitetura-dos-componentes)
+    - [service--userdata](#service--userdata)
+    - [userdata](#userdata)
+    - [Kafka Source Connector](#kafka-source-connector)
+    - [cdc.info-user](#cdcinfouser)
+    - [service--push-email](#service--push-email)
+- [Referencias](#referencias)
 
 
 ## Tecnologias
@@ -11,6 +19,7 @@ Projeto para estudo de aplicação para estudo do uso do design pattern Change D
 - Microsoft SQL Server
 - Apache Kafka 3.5
 - Kafka Connectors
+- Kubernetes
 - **(A definir linguagem de programação dos serviços)**
 
 
@@ -56,6 +65,40 @@ Tópico Kafka responsavel por receber as atualizações de dados cadastrais, ess
 
 ### service--push-email
 Serviço responsavel por realizar o envio de notificações para usuários via email. O serviço irá consumir o tópico kafka cdc.inf-user para que seja enviado sobre a atualização de dados cadastrais para o usuário
+
+
+## Criação banco de dados
+
+
+### Kubernetes
+
+Para criar o banco de dados, será utilizado o Kubernetes para a infraestrutura do servidor. Para o teste local, está sendo utilizado o [Microk8s](https://microk8s.io/).
+
+ Com o arquivo .kubeconfig configurado no seu computador, para criar o banco de dados no cluster Kubernetes, basta acessar o diretório ```k8s/microsoft-sql-server/``` e executar o comando a seguir:
+
+```sh
+kubectl apply -k .
+
+namespace/mssql created
+service/mssql created
+pod/mssql created
+```
+
+para validar a execução do pod do banco de dados, basta listar o pod pelo namespace com o comando a seguir:
+
+```sh
+kubectl get pods -n mssql
+
+NAME    READY   STATUS    RESTARTS   AGE
+mssql   1/1     Running   0          8m41s
+```
+
+#### Acessar o banco de dados
+
+Para acessar o banco de dados, está sendo utilizado o [DBeaver](https://dbeaver.io/). Para conectar com o banco executado localmente no Microk8s, basta acessar com a host `localhost`, porta `31433` (porta exposta pelo service), usuario `sa` e a senha está no artefato kubernetes `pod.yaml`.
+
+![dbeaver-connection-example](./imgs/dbeaver-microk8s-connection-example.png)
+
 
 
 ## Referencias
