@@ -3,6 +3,7 @@ package com.thuurzz.transportlayer;
 import com.thuurzz.api.UsersApi;
 import com.thuurzz.interactors.UserUseCase;
 import com.thuurzz.model.UserDTO;
+import com.thuurzz.transportlayer.mapper.UserDTOTransportMapper;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 
@@ -11,10 +12,13 @@ import java.util.List;
 public class UserControllerAPIUserImpl implements UsersApi {
 
     @Inject
-    UserUseCase userUseCase;
+    private UserUseCase userUseCase;
+
+    private final UserDTOTransportMapper mapper = UserDTOTransportMapper.INSTANCE;
 
     @Override
     public Response createUserDTO(UserDTO userDTO) {
+        userUseCase.createUser(mapper.mapping(userDTO));
         return null;
     }
 
