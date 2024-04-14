@@ -36,6 +36,7 @@ public class UsersUserCaseImpl implements UserUseCase {
 
     @Override
     public List<User> listUsers() {
-        return List.of();
+        List<User> listUsers = userRepository.listUsers();
+        return listUsers;
     }
 }

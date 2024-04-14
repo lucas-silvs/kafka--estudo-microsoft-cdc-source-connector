@@ -12,10 +12,14 @@ import java.util.List;
 @ApplicationScoped
 public class UserRepositoryImpl implements UserRepository {
 
-    @Inject
     private UserDataSource userDataSource;
 
     private final UserEntityMapper mapper = UserEntityMapper.INSTANCE;
+
+    @Inject
+    public UserRepositoryImpl(UserDataSource userDataSource) {
+        this.userDataSource = userDataSource;
+    }
 
     @Override
     public User createUser(User user) {
@@ -41,6 +45,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> listUsers() {
-        return List.of();
+        List<UserEntity> userEntityList = userDataSource.listUsers();
+        return userEntityList.stream().map(mapper::mapping).toList();
     }
 }

@@ -27,7 +27,8 @@ public class UserControllerAPIUserImpl implements UsersApi {
 
     @Override
     public Response deleteUserDTO(String id) {
-        return null;
+        //TODO implementar delete
+        return RestResponse.ResponseBuilder.create(Response.Status.ACCEPTED).build().toResponse();
     }
 
     @Override
@@ -37,7 +38,10 @@ public class UserControllerAPIUserImpl implements UsersApi {
 
     @Override
     public List<UserDTO> listUserDTOS() {
-        return List.of();
+        List <User> listUsers = userUseCase.listUsers();
+        List <UserDTO> listUserDTO = listUsers.stream().map(mapper::mapping).toList();
+        return  listUserDTO;
+//        return RestResponse.ResponseBuilder.create(Response.Status.OK, listUserDTO).build().toResponse();
     }
 
     @Override

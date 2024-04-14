@@ -9,7 +9,7 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
-public class UserDataSourceMSSQLImpl implements UserDataSource{
+public class UserDataSourceMSSQLImpl implements UserDataSource {
 
     @Inject
     UserRepositoryDataSource userRepositoryDataSource;
@@ -38,6 +38,7 @@ public class UserDataSourceMSSQLImpl implements UserDataSource{
 
     @Override
     public List<UserEntity> listUsers() {
-        return List.of();
+        List<UserEntity> listUserEntities = userRepositoryDataSource.listAll();
+        return listUserEntities;
     }
 }
