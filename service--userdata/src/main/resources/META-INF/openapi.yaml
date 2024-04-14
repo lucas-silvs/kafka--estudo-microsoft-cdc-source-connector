@@ -1,0 +1,160 @@
+openapi: 3.0.2
+info:
+  title: Crud de Clientes - Quarkus
+  version: 1.0.0
+  description: APi para gerenciamento de clientes.
+  contact:
+    name: Arthur Silva
+    email: thuur.vss@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+servers:
+  -
+    url: 'http://localhost:80/api/v1'
+    description: Servidor local
+paths:
+  /users:
+    summary: Path used to manage the list of userdtos.
+    description: >-
+      The REST endpoint/path used to list and create zero or more `UserDTO` entities.  This path
+      contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
+    get:
+      tags:
+        - Users
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+          description: Successful response - returns an array of `UserDTO` entities.
+      operationId: listUserDTOS
+      summary: List All UserDTOS
+      description: Gets a list of all `UserDTO` entities.
+    post:
+      requestBody:
+        description: A new `UserDTO` to be created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+            examples:
+              CreateUser:
+                value:
+                  username: example_user
+                  email: example@example.com
+                  password: examplePassword123
+                  fullName: John Doe
+                  dateOfBirth: '1990-05-15'
+                  address: '123 Main St, City, Country'
+        required: true
+      tags:
+        - Users
+      responses:
+        '201':
+          description: Successful response.
+      operationId: createUserDTO
+      summary: Create a UserDTO
+      description: Creates a new instance of a `UserDTO`.
+  '/users/{id}':
+    summary: Path used to manage a single UserDTO.
+    description: >-
+      The REST endpoint/path used to get, update, and delete single instances of an `UserDTO`.  This
+      path contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete
+      tasks, respectively.
+    get:
+      tags:
+        - Users
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+          description: Successful response - returns a single `UserDTO`.
+      operationId: listUserDTO
+      summary: Get a UserDTO
+      description: Gets the details of a single instance of a `UserDTO`.
+    put:
+      requestBody:
+        description: Updated `UserDTO` information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      tags:
+        - Users
+      responses:
+        '202':
+          description: Successful response.
+      operationId: updateUserDTO
+      summary: Update a UserDTO
+      description: Updates an existing `UserDTO`.
+    delete:
+      tags:
+        - Users
+      responses:
+        '204':
+          description: Successful response.
+      operationId: deleteUserDTO
+      summary: Delete a UserDTO
+      description: Deletes an existing `UserDTO`.
+    parameters:
+      -
+        name: id
+        description: A unique identifier for a `UserDTO`.
+        schema:
+          type: string
+        in: path
+        required: true
+components:
+  schemas:
+    UserDTO:
+      title: Root Type for UserDTO
+      description: User transfer object
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        fullName:
+          type: string
+        dateOfBirth:
+          format: date
+          type: string
+        address:
+          type: string
+        id:
+          description: Identification of user
+          type: string
+        createdAt:
+          description: Date of creation
+          type: string
+        lastUpdated:
+          description: Date of update
+          type: string
+        status:
+          description: Status of register
+          type: string
+      example:
+        id: 7e37fc3e-4290-4cbb-9814-1a5a61ae91c7
+        username: example_user
+        email: example@example.com
+        password: examplePassword123
+        fullName: John Doe
+        dateOfBirth: '1990-05-15'
+        address: '123 Main St, City, Country'
+        createdAt: '2023-11-16T12:30:45Z'
+        updatedAt: '2023-11-16T12:30:45Z'
+        status: pending
+tags:
+  -
+    name: Users
+    description: Administration of users
