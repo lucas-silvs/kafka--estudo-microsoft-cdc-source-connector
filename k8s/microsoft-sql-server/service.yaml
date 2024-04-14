@@ -1,12 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-   name: mssql
-   namespace: mssql
+  name: mssql
+  namespace: mssql
 spec:
   type: NodePort
-  ports:
-  - port: 1433 
-    nodePort: 31433
   selector:
-    run: mssql
+    app: mssql
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
+      nodePort: 31433  # Este é o NodePort. O Kubernetes escolhe automaticamente se você omitir esta linha.
