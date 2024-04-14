@@ -2,10 +2,12 @@ package com.thuurzz.interactors;
 
 import com.thuurzz.entities.User;
 import com.thuurzz.repositories.UserRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.util.List;
 
+@ApplicationScoped
 public class UsersUserCaseImpl implements UserUseCase {
 
     @Inject

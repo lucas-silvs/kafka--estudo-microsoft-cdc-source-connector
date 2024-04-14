@@ -1,19 +1,26 @@
 package com.thuurzz.repositories;
 
 import com.thuurzz.datasources.UserDataSource;
+import com.thuurzz.datasources.entities.UserEntity;
 import com.thuurzz.entities.User;
+import com.thuurzz.repositories.mapper.UserEntityMapper;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.util.List;
 
+@ApplicationScoped
 public class UserRepositoryImpl implements UserRepository {
 
     @Inject
     private UserDataSource userDataSource;
 
+    private final UserEntityMapper mapper = UserEntityMapper.INSTANCE;
+
     @Override
     public User createUser(User user) {
-        User newUser = userDataSource.createUser(user);
+        UserEntity newUserEntity = userDataSource.createUser(mapper.mapping(user));
+        User newUser = mapper.mapping(newUserEntity);
         return newUser;
     }
 

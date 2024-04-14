@@ -1,25 +1,33 @@
 package com.thuurzz.datasources;
 
-import com.thuurzz.entities.User;
+import com.thuurzz.datasources.entities.UserEntity;
+import com.thuurzz.datasources.repository.UserRepositoryDataSource;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
+@ApplicationScoped
 public class UserDataSourceMSSQLImpl implements UserDataSource{
 
-
+    @Inject
+    UserRepositoryDataSource userRepositoryDataSource;
 
     @Override
-    public User createUser(User user) {
+    @Transactional
+    public UserEntity createUser(UserEntity userEntity) {
+        userRepositoryDataSource.persist(userEntity);
+        return userEntity;
+    }
+
+    @Override
+    public UserEntity getUserById(String id) {
         return null;
     }
 
     @Override
-    public User getUserById(String id) {
-        return null;
-    }
-
-    @Override
-    public User updateUser(String id, User user) {
+    public UserEntity updateUser(String id, UserEntity userEntity) {
         return null;
     }
 
@@ -29,7 +37,7 @@ public class UserDataSourceMSSQLImpl implements UserDataSource{
     }
 
     @Override
-    public List<User> listUsers() {
+    public List<UserEntity> listUsers() {
         return List.of();
     }
 }

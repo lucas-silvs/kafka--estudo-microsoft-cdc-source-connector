@@ -1,11 +1,13 @@
 package com.thuurzz.transportlayer;
 
 import com.thuurzz.api.UsersApi;
+import com.thuurzz.entities.User;
 import com.thuurzz.interactors.UserUseCase;
 import com.thuurzz.model.UserDTO;
 import com.thuurzz.transportlayer.mapper.UserDTOTransportMapper;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
+import org.jboss.resteasy.reactive.RestResponse;
 
 import java.util.List;
 
@@ -18,8 +20,9 @@ public class UserControllerAPIUserImpl implements UsersApi {
 
     @Override
     public Response createUserDTO(UserDTO userDTO) {
-        userUseCase.createUser(mapper.mapping(userDTO));
-        return null;
+        User newUser = userUseCase.createUser(mapper.mapping(userDTO));
+        UserDTO useResponse = mapper.mapping(newUser);
+        return RestResponse.ResponseBuilder.create(Response.Status.CREATED, useResponse).build().toResponse();
     }
 
     @Override

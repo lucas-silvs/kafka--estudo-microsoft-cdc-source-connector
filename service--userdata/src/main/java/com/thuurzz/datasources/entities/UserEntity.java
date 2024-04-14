@@ -1,10 +1,20 @@
-package com.thuurzz.entities;
+package com.thuurzz.datasources.entities;
 
 import com.thuurzz.enums.Status;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
-public class User {
+@Entity
+@Table(name = "users")
+public class UserEntity extends PanacheEntityBase {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
     private String username;
     private String email;
     private String password;
@@ -16,19 +26,24 @@ public class User {
     private Status status;
 
 
-    public User(String username, String email, String password, String fullName, LocalDate dateOfBirth, String address, LocalDate createdAt, LocalDate lastUpdated, Status status) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.fullName = fullName;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-        this.createdAt = createdAt;
-        this.lastUpdated = lastUpdated;
-        this.status = status;
+    public UserEntity() {
     }
 
-    public User() {
+    public UserEntity(Status status, LocalDate lastUpdated, LocalDate createdAt, String address, LocalDate dateOfBirth, String fullName, String password, String email, String username, UUID id) {
+        this.status = status;
+        this.lastUpdated = lastUpdated;
+        this.createdAt = createdAt;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.fullName = fullName;
+        this.password = password;
+        this.email = email;
+        this.username = username;
+        this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getUsername() {

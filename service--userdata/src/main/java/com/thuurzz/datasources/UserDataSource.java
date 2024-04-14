@@ -1,18 +1,18 @@
 package com.thuurzz.datasources;
 
-import com.thuurzz.entities.User;
+import com.thuurzz.datasources.entities.UserEntity;
 
 import java.util.List;
 
 public interface UserDataSource {
-    User createUser(User user);
+    UserEntity createUser(UserEntity userEntity);
 
-    User getUserById(String id);
+    UserEntity getUserById(String id);
 
-    User updateUser(String id, User user);
+    UserEntity updateUser(String id, UserEntity userEntity);
 
     void deleteUser(String id);
 
-    List<User> listUsers();
+    List<UserEntity> listUsers();
 
 }
