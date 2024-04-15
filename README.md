@@ -15,7 +15,7 @@ Projeto para estudo de aplicação para estudo do uso do design pattern Change D
 
 ## Tecnologias
 
-- Microsoft SQL Server
+- MySQL
 - Apache Kafka 3.5
 - Kafka Connectors
 - Kubernetes
@@ -99,6 +99,50 @@ Para acessar o banco de dados, está sendo utilizado o [DBeaver](https://dbeaver
 ![dbeaver-connection-example](./imgs/dbeaver-microk8s-connection-example.png)
 
 
+## Criação do conector CDC
+
+Para criar o conector CDC, será utilizado o Mysql Debezium CDC Source Connector, que será o responsavel por consumir a tabela de alteração do Bin log do Mysql e criar eventos em um tópico Kafka. Para, será realizado a criação do conector via rest API Proxy do Confluent Platform. conforme o exemplo abaixo:
+
+```sh
+curl --location 'http://localhost:8083/connectors' \
+--header 'Content-Type: application/json' \
+--data '{
+  "name": "mysql-debezium-cdc-source-user-teste", #nome connector
+  "config": {
+    "database.history.kafka.bootstrap.servers": "broker.kafka.svc.cluster.local:29092", #url cluster kafka
+    "database.server.name": "teste", #nome do database
+    "schema.history.internal.kafka.bootstrap.servers": "broker.kafka.svc.cluster.local:29092", #url cluster kafka
+    "schema.history.internal.kafka.topic": "schemahistory.changes", #nome tópico para alteração das tabelas monitoradas
+    "debezium.source.database.history": "io.debezium.relational.history.FileDatabaseHistory", #forma de armazenamento das alterações
+    "connector.class": "io.debezium.connector.mysql.MySqlConnector", #classe do connector
+    "tasks.max": "1", #numero de tasks do conector em execução
+    "topic.prefix": "clients.cdc", #prefixo do tópico de eventos
+    "database.hostname": "mysql.mysql.svc.cluster.local",
+    "database.port": "3306", # porta do banco de dados
+    "database.user": "root", #usuario do banco de dados
+    "database.password": "*********", #senha do usuário do banco de dados
+    "database.server.id": "1", # id do servidor de banco de dados
+    "column.include.list": ".*id, .*address" #campos que deseja monitorar,
+    "table.include.list": ".*users" #tabela que deseja monitorar,
+    "include.schema.changes": "false", # flag para habilitar se deseja monitorar alterações nas tabelas do database
+    "table.ignore.builtin": "true", #flag para ignorar database do sistema
+    "database.include.list": ".*clients, clients" #database que deseja monitorar
+  }
+}'
+```
+
+Executado a requisição, o conector irá passar a publicar eventos de criação, alteração e deleção na tabela informada, e nestes eventos terão os campos informados na criação do connector. A seguir os exemplos das operações:
+
+![create-user](./imgs/exemple-include-row-cdc-events.png)
+*Exemplo de evento de criação de usuário*
+
+![update-user](./imgs/exemple-update-row-cdc-events.png)
+*Exemplo de evento de atualização de dados de usuário*
+
+![delete-user](./imgs/exemple-delete-row-cdc-events.png)
+*Exemplo de evento de exclusão de usuário*
+
+ 
 
 ## Referencias
 
@@ -106,3 +150,5 @@ Para acessar o banco de dados, está sendo utilizado o [DBeaver](https://dbeaver
 - [C4 Model](https://c4model.com/)
 
 - [SQL Server on Linux on Kubernetes: Part 1](https://www.phillipsj.net/posts/sql-server-on-linux-on-kubernetes-part-1/)
+
+- [Debezium Mysql Connector](https://debezium.io/documentation/reference/stable/connectors/mysql.html)
