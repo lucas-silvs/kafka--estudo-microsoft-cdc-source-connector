@@ -21,31 +21,33 @@ public class UserControllerAPIUserImpl implements UsersApi {
     @Override
     public Response createUserDTO(UserDTO userDTO) {
         User newUser = userUseCase.createUser(mapper.mapping(userDTO));
-        UserDTO useResponse = mapper.mapping(newUser);
-        return RestResponse.ResponseBuilder.create(Response.Status.CREATED, useResponse).build().toResponse();
+        UserDTO userResponse = mapper.mapping(newUser);
+        return RestResponse.ResponseBuilder.create(Response.Status.CREATED, userResponse).build().toResponse();
     }
 
     @Override
     public Response deleteUserDTO(String id) {
-        //TODO implementar delete
+        userUseCase.deleteUser(id);
         return RestResponse.ResponseBuilder.create(Response.Status.ACCEPTED).build().toResponse();
     }
 
     @Override
     public UserDTO listUserDTO(String id) {
-        return null;
+        User user = userUseCase.getUserById(id);
+        UserDTO userResponse = mapper.mapping(user);
+        return userResponse;
     }
 
     @Override
     public List<UserDTO> listUserDTOS() {
-        List <User> listUsers = userUseCase.listUsers();
-        List <UserDTO> listUserDTO = listUsers.stream().map(mapper::mapping).toList();
-        return  listUserDTO;
-//        return RestResponse.ResponseBuilder.create(Response.Status.OK, listUserDTO).build().toResponse();
+        List<User> listUsers = userUseCase.listUsers();
+        List<UserDTO> listUserDTO = listUsers.stream().map(mapper::mapping).toList();
+        return listUserDTO;
     }
 
     @Override
     public Response updateUserDTO(String id, UserDTO userDTO) {
-        return null;
+        User userUpdated = userUseCase.updateUser(id, mapper.mapping(userDTO));
+        return RestResponse.ResponseBuilder.create(Response.Status.CREATED, userUpdated).build().toResponse();
     }
 }

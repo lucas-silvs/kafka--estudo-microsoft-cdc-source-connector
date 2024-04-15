@@ -21,17 +21,25 @@ public class UsersUserCaseImpl implements UserUseCase {
 
     @Override
     public User getUserById(String id) {
-        return null;
+        return userRepository.getUserById(id);
     }
 
     @Override
     public User updateUser(String id, User user) {
+        User userFounded = userRepository.getUserById(id);
+        if (user != null) {
+            User userUpdated = userRepository.updateUser(id, userFounded);
+            return userUpdated;
+        }
         return null;
     }
 
     @Override
     public void deleteUser(String id) {
-
+        User user = userRepository.getUserById(id);
+        if (user != null) {
+            userRepository.deleteUser(id);
+        }
     }
 
     @Override

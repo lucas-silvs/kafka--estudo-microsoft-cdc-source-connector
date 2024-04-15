@@ -30,17 +30,21 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getUserById(String id) {
-        return null;
+        UserEntity userEntity = userDataSource.getUserById(id);
+        User user = mapper.mapping(userEntity);
+        return user;
     }
 
     @Override
     public User updateUser(String id, User user) {
-        return null;
+        UserEntity userEntity = userDataSource.updateUser(id, mapper.mapping(user));
+        User userUpdated = mapper.mapping(userEntity);
+        return userUpdated;
     }
 
     @Override
     public void deleteUser(String id) {
-
+        userDataSource.deleteUser(id);
     }
 
     @Override
