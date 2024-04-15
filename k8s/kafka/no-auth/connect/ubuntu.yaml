@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ssh-access
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ssh-access
+  template:
+    metadata:
+      labels:
+        app: ssh-access
+    spec:
+      containers:
+      - name: ssh-access
+        image: ubuntu:latest
+        command: ["sleep"]
+        args: ["infinity"]
+        ports:
+          - containerPort: 22
+            name: ssh
+
+
