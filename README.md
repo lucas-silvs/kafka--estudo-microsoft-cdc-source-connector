@@ -71,10 +71,19 @@ Serviço responsavel por realizar o envio de notificações para usuários via e
 ## Configurando o cluster Kafka
 
 ### Kubernetes
-Para configurar o cluster kafka no Kubernetes, 
+Para configurar o cluster kafka no Kubernetes, deve primeiro registrar a imagem do kafka connect para que instale as configurações do debezium. Para isso basta executar o comando abaixo:
 
+```sh
+# Comando cria a imagem do kafka connect com os plugins instalados
+docker build -t localhost:32000/cp-server-connect-mssql:1.0.1 .
+```
 
-deve acessar o diretório  ```k8s/kafka/``` e executar o comando abaixo:
+```zsh
+# Comando envia a imagem customizada ao registry do microk8s
+docker push localhost:32000/cp-server-connect-mssql:1.0.1
+```
+
+Com a imagem registrada, deve acessar o diretório  ```k8s/kafka/``` e executar o comando abaixo:
 
 ```sh
 kubectl apply -f no-auth/
