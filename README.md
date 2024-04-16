@@ -69,7 +69,10 @@ Serviço responsavel por realizar o envio de notificações para usuários via e
 ## Configurando o cluster Kafka
 
 ### Kubernetes
-Para configurar o cluster kafka no Kubernetes, deve acessar o diretório  ```k8s/kafka/``` e executar o comando abaixo:
+Para configurar o cluster kafka no Kubernetes, 
+
+
+deve acessar o diretório  ```k8s/kafka/``` e executar o comando abaixo:
 
 ```sh
 kubectl apply -f no-auth/
@@ -148,3 +151,5 @@ Para acessar o banco de dados, está sendo utilizado o [DBeaver](https://dbeaver
 - [C4 Model](https://c4model.com/)
 
 - [SQL Server on Linux on Kubernetes: Part 1](https://www.phillipsj.net/posts/sql-server-on-linux-on-kubernetes-part-1/)
+
+- [Debezium MySQL Connector](https://debezium.io/documentation/reference/stable/connectors/mysql.html)
