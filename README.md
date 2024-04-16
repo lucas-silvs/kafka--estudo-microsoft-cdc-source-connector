@@ -68,6 +68,60 @@ Tópico Kafka responsavel por receber as atualizações de dados cadastrais, ess
 Serviço responsavel por realizar o envio de notificações para usuários via email. O serviço irá consumir o tópico kafka cdc.inf-user para que seja enviado sobre a atualização de dados cadastrais para o usuário
 
 
+## Configurando o cluster Kafka
+
+### Kubernetes
+Para configurar o cluster kafka no Kubernetes, deve primeiro registrar a imagem do kafka connect para que instale as configurações do debezium. Para isso basta executar o comando abaixo:
+
+```sh
+# Comando cria a imagem do kafka connect com os plugins instalados
+docker build -t localhost:32000/cp-server-connect-mssql:1.0.1 .
+```
+
+```zsh
+# Comando envia a imagem customizada ao registry do microk8s
+docker push localhost:32000/cp-server-connect-mssql:1.0.1
+```
+
+Com a imagem registrada, deve acessar o diretório  ```k8s/kafka/``` e executar o comando abaixo:
+
+```sh
+kubectl apply -f no-auth/
+```
+
+Com isso, será criado os seguintes recursos:
+
+- **Zookeeper**: Serviço de coordenação para sistemas distribuídos usado pelo Kafka para gerenciamento de tópicos de brokers e offsets de consumidores.
+
+- **Kafka Broker**: Servidor do Kafka que armazena dados e atende clientes. Faz parte de um cluster Kafka, gerenciando a persistência e replicação de mensagens.
+
+- **Kafka Connect**: Serviço para integração do Kafka a outros sistemas de dados. Para conexão é realizado o uso de conectores que são responsaveis pela integração.
+
+- **KsqlDB Cluster**: Cluster KsqlDB é o serviço para processamento de streams de eventos em tempo real utilizando uma sintaxe semelhante ao SQL.
+
+- **Confluent Control Center**: Painel de controle para recursos do Kafka, que oferece monitoramento, gerenciamento e informações dos sistemas.
+
+- **Confluent REST Proxy**: Ferramenta que disponibiliza uma interface interface RESTful para um cluster Kafka, facilitando a produção e consumo de mensagens, visualização do estado do cluster e realização de ações administrativas sem o protocolo nativo Kafka.
+
+- **Schema Registry**: Repositório centralizado para o gerenciamento de esquemas do Kafka. Fornece uma camada de serviço para seus metadados e uma interface RESTful para gerenciar esquemas Avro.
+
+### Acessando o painel de control do Kafka
+
+Com os recursos instalados no cluster Kubernetes, eles podem ser acessados através da seguintes url:
+
+
+- **Kafka Broker**: `localhost:9092`
+
+- **Kafka Connect**: `http://localhost:8083`
+
+- **KsqlDB Cluster**: `http://localhost:8088`
+
+- **Confluent Control Center**: `http://localhost:9021/clusters`
+ 
+- **Confluent REST Proxy**: `http://localhost:8082`
+
+- **Schema Registry**: `http://localhost:8081`
+
 ## Criação banco de dados
 
 
@@ -96,7 +150,7 @@ mssql   1/1     Running   0          8m41s
 
 #### Acessar o banco de dados
 
-Para acessar o banco de dados, está sendo utilizado o [DBeaver](https://dbeaver.io/). Para conectar com o banco executado localmente no Microk8s, basta acessar com a host `localhost`, porta `31433` (porta exposta pelo service), usuario `sa` e a senha está no artefato kubernetes `pod.yaml`.
+Para acessar o banco de dados, está sendo utilizado o [DBeaver](https://dbeaver.io/). Para conectar com o banco executado localmente no Microk8s, basta acessar com a host `localhost`, porta `33303` (porta exposta pelo service), usuario `root` (ou outro usuario que deseje criar) e a senha está no artefato kubernetes `pod.yaml`.
 
 ![dbeaver-connection-example](./imgs/dbeaver-microk8s-connection-example.png)
 

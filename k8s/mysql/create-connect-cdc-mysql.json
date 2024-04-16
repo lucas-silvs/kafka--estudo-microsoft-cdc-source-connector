@@ -1,0 +1,21 @@
+{
+    "name": "mysql-debezium-cdc-source-user",
+    "config": {
+        "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+        "tasks.max": "1",
+        "database.hostname": "mysql.mysql.svc.cluster.local",
+        "database.port": "3306",
+        "database.user": "root",
+        "database.password": "quarkusdb",
+        "database.server.id": "1",
+        "database.server.name": "clients",
+        "database.history.kafka.bootstrap.servers": "broker.kafka.svc.cluster.local:29092",
+        "debezium.source.database.history": "io.debezium.relational.history.FileDatabaseHistory",
+        "topic.prefix": "connector.cdc.mysql",
+        "schema.history.internal.kafka.bootstrap.servers": "broker.kafka.svc.cluster.local:29092",
+        "schema.history.internal.kafka.topic": "schemahistory.changes",
+        "include.schema.changes": "false",
+        "table.include.list": "users",
+        "database.include.list": "clients"
+    }
+}
