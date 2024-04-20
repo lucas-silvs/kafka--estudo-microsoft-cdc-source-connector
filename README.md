@@ -1,4 +1,4 @@
-# kafka--estudo-microsoft-cdc-source-connector
+# kafka - Estudo CDC Source Connector
 Projeto para estudo de aplicação para estudo do uso do design pattern Change Data Capture (CDC) para monitorar alterações em um banco de dados com o Kafka. Será utilizado com cenário um serviço de atualização de dados de usuário, que ao ser atualizado com sucesso no banco de dados, é enviado uma email para o usuário que teve os dados atualizados.
 
 
