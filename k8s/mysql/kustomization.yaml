@@ -9,3 +9,4 @@ resources:
   - service.yaml
   - secret.yaml
   - storage.yaml
+  - configMap.yaml

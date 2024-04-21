@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-binlog-config
+  namespace: mysql
+data:
+  my.cnf: |-
+    [mysqld]
+    log_bin
+    binlog_format=ROW
+    server-id=1

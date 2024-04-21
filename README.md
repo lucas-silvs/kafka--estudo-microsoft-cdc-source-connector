@@ -64,8 +64,8 @@ Conector Kafka Microsoft SQL Server CDC Source Connector para integrar com o ban
 Tópico Kafka responsavel por receber as atualizações de dados cadastrais, essa informação será consumida pelo serviço de push por email. O objetivo do tópico é informar a todas as partes interessadas sobre a atualização de dados cadastrais.
 
 
-### service--push-email
-Serviço responsavel por realizar o envio de notificações para usuários via email. O serviço irá consumir o tópico kafka cdc.inf-user para que seja enviado sobre a atualização de dados cadastrais para o usuário
+### service--push-notification
+Serviço responsavel por realizar o envio de notificações para usuários sobre as atualizações de dados. O serviço irá consumir o tópico kafka cdc.inf-user para que seja enviado sobre a atualização de dados cadastrais para o usuário.
 
 
 ## Configurando o cluster Kafka
