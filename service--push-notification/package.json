@@ -18,6 +18,13 @@
   },
   "dependencies": {
     "@kafkajs/confluent-schema-registry": "^3.3.0",
-    "kafkajs": "^2.2.4"
+    "@types/config": "^3.3.4",
+    "@types/nodemailer": "^6.4.14",
+    "config": "^3.3.11",
+    "dotenv": "^16.4.5",
+    "js-yaml": "^4.1.0",
+    "kafkajs": "^2.2.4",
+    "nodemailer": "^6.9.13",
+    "zod": "^3.22.5"
   }
 }

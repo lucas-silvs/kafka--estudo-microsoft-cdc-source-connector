@@ -1,6 +1,6 @@
 import UserDataEvent from "./UserDataEvent";
 
-export interface UserDataEventModel {
+export interface MessageUserEventModel {
   userDataBefore: UserDataEvent;
   userDataAfter: UserDataEvent;
   operation: string;

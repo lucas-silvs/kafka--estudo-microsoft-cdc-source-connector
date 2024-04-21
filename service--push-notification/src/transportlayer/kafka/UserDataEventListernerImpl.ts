@@ -6,25 +6,23 @@ import {
 } from "kafkajs";
 import { UserDataEventListener } from "./UserDataEventListener";
 import { SchemaRegistry } from "@kafkajs/confluent-schema-registry";
-import { UserDataEventModel } from "./models/UserDataEventModel";
+import { MessageUserEventModel } from "./models/MessageUserEventModel";
 import { UserData } from "../../entities/UserData";
 import { UserNotificationUserCase } from "../../interactors/UserNotificationUseCase";
+import { config } from "../../configs/configs";
 
 export default class UserDataEventListenerImpl
   implements UserDataEventListener
 {
-  private schemaRegistry: SchemaRegistry;
-
   public constructor(
     private userNotificationUseCase: UserNotificationUserCase,
-    private kafkaConsumer: Consumer
-  ) {
-    this.schemaRegistry = new SchemaRegistry({ host: "http://localhost:8081" });
-  }
+    private kafkaConsumer: Consumer,
+    private schemaRegistry: SchemaRegistry
+  ) {}
 
   public async startListenEvents(): Promise<void> {
     const topic: ConsumerSubscribeTopics = {
-      topics: ["clients.cdc.clients.users"],
+      topics: [config.KAFKA_TOPIC],
       fromBeginning: false,
     };
 
@@ -45,21 +43,23 @@ export default class UserDataEventListenerImpl
             message.value as Buffer
           );
 
-          const userData: UserDataEventModel = {
+          const userData: MessageUserEventModel = {
             userDataBefore: messageValue.before,
             userDataAfter: messageValue.after,
             operation: messageValue.op,
           };
-          const userDataEntityBefore: UserData = {
+          const userDataEntityAfter: UserData = {
             address: userData.userDataAfter?.address,
             id: userData.userDataAfter?.id,
             name: userData.userDataAfter?.id,
+            email: "lucas@aluno.faculdadeimpacta.com.br",
           };
 
-          const userDataEntityAfter: UserData = {
+          const userDataEntityBefore: UserData = {
             address: userData.userDataBefore?.address,
             id: userData.userDataBefore?.id,
             name: userData.userDataBefore?.id,
+            email: "lucas@aluno.faculdadeimpacta.com.br",
           };
 
           this.userNotificationUseCase.pushNotification({
@@ -67,8 +67,6 @@ export default class UserDataEventListenerImpl
             userDataBefore: userDataEntityBefore,
             userDataAfter: userDataEntityAfter,
           });
-
-          console.log(userData);
         },
       });
     } catch (error) {
@@ -78,14 +76,5 @@ export default class UserDataEventListenerImpl
 
   public async shutdown(): Promise<void> {
     await this.kafkaConsumer.disconnect();
-  }
-
-  public static createKafkaConsumer(): Consumer {
-    const kafka = new Kafka({
-      clientId: "teste",
-      brokers: ["localhost:9092"],
-    });
-    const consumer = kafka.consumer({ groupId: "nodejs" });
-    return consumer;
   }
 }
