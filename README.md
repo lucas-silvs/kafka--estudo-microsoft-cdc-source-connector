@@ -159,6 +159,18 @@ Para acessar o banco de dados, está sendo utilizado o [DBeaver](https://dbeaver
 
 ![dbeaver-connection-example](./imgs/dbeaver-microk8s-connection-example.png)
 
+---
+
+[!NOTE]
+
+Pode ser necessário criar um port forward do service do banco de dados com o localhost, para isso basta executar o comando abaixo
+
+```sh
+kubectl port-forward service/mysql 3306:3306
+```
+
+---
+
 Conectado ao banco de dados, basta abrir uma janela de script SQL, e executar o script abaixo:
 
 ```sql
