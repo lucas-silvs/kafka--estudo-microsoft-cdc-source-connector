@@ -8,21 +8,18 @@ export class ClientEmailDataSourceImpl implements ClientEmailDataSource {
 
   constructor() {
     this.transporter = createTransport({
-      host: config.EMAIL_HOST,
-      port: 1025,
-      tls: {
-        rejectUnauthorized: false,
-      },
+      host: config.EMAIL_CLIENT_HOST,
+      port: parseInt(config.EMAIL_CLIENT_PORT),
       auth: {
-        user: config.EMAIL_USER,
-        pass: config.EMAIL_PASS,
+        user: config.EMAIL_CLIENT_USER,
+        pass: config.EMAIL_CLIENT_PASS,
       },
     });
   }
 
   async sendEmail(email: EmailModelDatasource): Promise<void> {
     let mailOptions = {
-      from: config.EMAIL_USER,
+      from: config.EMAIL_CLIENT_USER,
       to: email.emailDestination,
       subject: email.subject,
       text: email.emailMessage,

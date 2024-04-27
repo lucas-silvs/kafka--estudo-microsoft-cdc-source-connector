@@ -15,6 +15,7 @@ export class NotificationRepositoryImpl implements NotificationRepository {
       emailMessage: message,
       subject: subjectMessage,
     };
+    this.emailClient.sendEmail(emailData);
     console.log(`Enviando notificação para ${emailData.emailDestination}`);
   }
 }

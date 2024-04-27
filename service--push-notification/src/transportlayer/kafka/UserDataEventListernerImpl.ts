@@ -51,13 +51,15 @@ export default class UserDataEventListenerImpl
           const userDataEntityAfter: UserData = {
             id: userData.userDataAfter?.id,
             fullname: userData.userDataAfter?.fullName,
-            email: userData.userDataAfter.email,
+            email: userData.userDataAfter?.email,
+            username: userData.userDataAfter?.username,
           };
 
           const userDataEntityBefore: UserData = {
             id: userData.userDataBefore?.id,
             fullname: userData.userDataBefore?.fullName,
             email: userData.userDataBefore?.email,
+            username: userData.userDataBefore?.username,
           };
 
           this.userNotificationUseCase.pushNotification({

@@ -13,9 +13,10 @@ const envSchema = z.object({
   KAFKA_GROUP_ID: z.string(),
   KAFKA_CLIENT_ID: z.string(),
   KAFKA_TOPIC: z.string(),
-  EMAIL_USER: z.string().email(),
-  EMAIL_PASS: z.string(),
-EMAIL_HOST: z.string(),
+  EMAIL_CLIENT_USER: z.string().email(),
+  EMAIL_CLIENT_PASS: z.string(),
+  EMAIL_CLIENT_PORT: z.string(),
+  EMAIL_CLIENT_HOST: z.string(),
 });
 
 // Função para extrair e validar as variáveis de ambiente

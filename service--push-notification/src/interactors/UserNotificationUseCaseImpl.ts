@@ -14,20 +14,20 @@ export class UserNotificationUserCaseImpl implements UserNotificationUserCase {
     switch (data.operation) {
       case "u":
         // Lógica para atualização
-        message = `usuario ${data.userDataAfter?.id} atualizado com sucesso!`;
-        subject = `Atualização de usuario ${data.userDataAfter?.id}`;
+        message = `usuario ${data.userDataAfter?.username} atualizado com sucesso!`;
+        subject = `Atualização de usuario ${data.userDataAfter?.username}`;
         emailDestination = data.userDataAfter?.email;
         break;
       case "c":
         // Lógica para criação
-        message = `usuario ${data.userDataAfter?.id} criado com sucesso!`;
-        subject = `Criação de usuario ${data.userDataAfter?.id}`;
+        message = `usuario ${data.userDataAfter?.username} criado com sucesso!`;
+        subject = `Criação de usuario ${data.userDataAfter?.username}`;
         emailDestination = data.userDataAfter?.email;
 
         break;
       case "d":
-        message = `usuario ${data.userDataBefore?.id} deletado com sucesso!`;
-        subject = `Deleção de usuario ${data.userDataBefore?.id}`;
+        message = `usuario ${data.userDataBefore?.username} deletado com sucesso!`;
+        subject = `Deleção de usuario ${data.userDataBefore?.username}`;
         emailDestination = data.userDataAfter?.email;
         break;
 
