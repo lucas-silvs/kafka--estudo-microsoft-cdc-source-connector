@@ -5,6 +5,8 @@ import { Kafka } from "kafkajs";
 import { config } from "./configs/configs";
 import { ClientEmailDataSourceImpl } from "./datasources/email/ClientEmailDataSourceImpl";
 import { ClientEmailDataSource } from "./datasources/email/ClientEmailDataSource";
+import { NotificationRepositoryImpl } from "./repositories/NotificationRepositoryImpl";
+import { NotificationRepository } from "./repositories/NotificationRepository";
 
 const kafka = new Kafka({
   clientId: config.KAFKA_CLIENT_ID,
@@ -14,8 +16,11 @@ const consumer = kafka.consumer({ groupId: config.KAFKA_GROUP_ID });
 
 const emailDatasource: ClientEmailDataSource = new ClientEmailDataSourceImpl();
 
+const notificationRepository: NotificationRepository =
+  new NotificationRepositoryImpl(emailDatasource);
+
 const userNotificationUseCase: UserNotificationUserCaseImpl =
-  new UserNotificationUserCaseImpl(emailDatasource);
+  new UserNotificationUserCaseImpl(notificationRepository);
 
 const userDataEventListener = new UserDataEventListener(
   userNotificationUseCase,

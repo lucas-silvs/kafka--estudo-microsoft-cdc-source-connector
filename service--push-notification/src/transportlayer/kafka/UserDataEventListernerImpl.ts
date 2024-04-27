@@ -49,17 +49,15 @@ export default class UserDataEventListenerImpl
             operation: messageValue.op,
           };
           const userDataEntityAfter: UserData = {
-            address: userData.userDataAfter?.address,
             id: userData.userDataAfter?.id,
-            name: userData.userDataAfter?.id,
-            email: "lucas@aluno.faculdadeimpacta.com.br",
+            fullname: userData.userDataAfter?.fullName,
+            email: userData.userDataAfter.email,
           };
 
           const userDataEntityBefore: UserData = {
-            address: userData.userDataBefore?.address,
             id: userData.userDataBefore?.id,
-            name: userData.userDataBefore?.id,
-            email: "lucas@aluno.faculdadeimpacta.com.br",
+            fullname: userData.userDataBefore?.fullName,
+            email: userData.userDataBefore?.email,
           };
 
           this.userNotificationUseCase.pushNotification({

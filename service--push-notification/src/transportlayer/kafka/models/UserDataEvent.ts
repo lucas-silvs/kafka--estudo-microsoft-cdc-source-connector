@@ -1,4 +1,5 @@
-export default interface UserDataEvent{
-    id: string;
-    address: string;
+export default interface UserDataEvent {
+  id: string;
+  email: string;
+  fullName: string;
 }

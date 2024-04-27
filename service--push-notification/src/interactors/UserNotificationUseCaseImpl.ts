@@ -1,12 +1,11 @@
-import { ClientEmailDataSource } from "../datasources/email/ClientEmailDataSource";
-import { EmailModelDatasource } from "../datasources/email/models/EmailModelDatasource";
+import { NotificationRepository } from "../repositories/NotificationRepository";
 import {
   DataNotificationModelUseCase,
   UserNotificationUserCase,
 } from "./UserNotificationUseCase";
 
 export class UserNotificationUserCaseImpl implements UserNotificationUserCase {
-  public constructor(private emailClient: ClientEmailDataSource) {}
+  public constructor(private notificationRepository: NotificationRepository) {}
 
   pushNotification(data: DataNotificationModelUseCase): void {
     let message;
@@ -35,12 +34,18 @@ export class UserNotificationUserCaseImpl implements UserNotificationUserCase {
       default:
         console.log("operação não reconhecida!");
     }
-    const emailData: EmailModelDatasource = {
-      emailDestination: emailDestination,
-      emailMessage: message,
-      subject: subject,
-    };
-
-    this.emailClient.sendEmail(emailData);
+    if (emailDestination) {
+      if (message && subject) {
+        this.notificationRepository.sendNotification(
+          emailDestination,
+          message,
+          subject
+        );
+      } else {
+        console.log("message or subject is null");
+      }
+    } else {
+      console.log("emailDestination is null");
+    }
   }
 }
