@@ -161,9 +161,7 @@ Para acessar o banco de dados, está sendo utilizado o [DBeaver](https://dbeaver
 
 ---
 
-[!NOTE]
-
-Pode ser necessário criar um port forward do service do banco de dados com o localhost, para isso basta executar o comando abaixo
+:warning: Pode ser necessário criar um port forward do service do banco de dados com o localhost, para isso basta executar o comando abaixo
 
 ```sh
 kubectl port-forward service/mysql 3306:3306
