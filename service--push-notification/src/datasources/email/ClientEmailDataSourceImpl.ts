@@ -23,6 +23,14 @@ export class ClientEmailDataSourceImpl implements ClientEmailDataSource {
       to: email.emailDestination,
       subject: email.subject,
       text: email.emailMessage,
+      html: `
+      <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 20px; line-height: 1.5;">
+        <h2 style="color: #333;">${email.subject}</h2>
+        <p>${email.emailMessage}</p>
+        <p>Atenciosamente,</p>
+        <p>Lojinha :)</p>
+      </div>
+    `,
     };
 
     console.log(mailOptions);
