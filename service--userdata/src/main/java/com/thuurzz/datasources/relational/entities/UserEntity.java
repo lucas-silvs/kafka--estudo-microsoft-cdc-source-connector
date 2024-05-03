@@ -1,4 +1,4 @@
-package com.thuurzz.datasources.entities;
+package com.thuurzz.datasources.relational.entities;
 
 import com.thuurzz.enums.Status;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
