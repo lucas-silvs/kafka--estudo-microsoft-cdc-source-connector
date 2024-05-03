@@ -5,6 +5,13 @@
     <artifactId>service--userdata</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <repositories>
+        <repository>
+            <id>artifactory-repo</id>
+            <url>http://localhost:31256/artifactory/maven-dev-virtual/</url>
+        </repository>
+    </repositories>
+
     <properties>
         <compiler-plugin.version>3.12.1</compiler-plugin.version>
         <maven.compiler.release>17</maven.compiler.release>

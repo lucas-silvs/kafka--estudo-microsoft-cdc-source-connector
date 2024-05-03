@@ -1,9 +1,8 @@
 import { createTransport, Transporter } from "nodemailer";
-import { ClientEmailDataSource } from "./ClientEmailDataSource";
-import { EmailModelDatasource } from "./models/EmailModelDatasource";
 import { config } from "../../configs/configs";
+import { NotificationRepository } from "../../repositories/NotificationRepository";
 
-export class ClientEmailDataSourceImpl implements ClientEmailDataSource {
+export class ClientEmailDataSourceImpl implements NotificationRepository {
   private transporter: Transporter;
 
   constructor() {
@@ -17,32 +16,35 @@ export class ClientEmailDataSourceImpl implements ClientEmailDataSource {
     });
   }
 
-  async sendEmail(email: EmailModelDatasource): Promise<void> {
+  async sendNotification(
+    userContactTarget: string,
+    message: string,
+    subjectMessage: string
+  ): Promise<void> {
     let mailOptions = {
       from: config.EMAIL_CLIENT_USER,
-      to: email.emailDestination,
-      subject: email.subject,
-      text: email.emailMessage,
+      to: userContactTarget,
+      subject: subjectMessage,
+      text: message,
       html: `
       <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 20px; line-height: 1.5;">
-        <h2 style="color: #333;">${email.subject}</h2>
-        <p>${email.emailMessage}</p>
+        <h2 style="color: #333;">${subjectMessage}</h2>
+        <p>${message}</p>
         <p>Atenciosamente,</p>
         <p>Lojinha :)</p>
       </div>
     `,
     };
 
-    console.log(mailOptions);
-
-    this.transporter.sendMail(mailOptions, function (error, info) {
-      console.log("error", error);
-      console.log("info", info);
-      if (error) {
-        return error;
-      } else {
-        return "E-mail enviado com sucesso!";
-      }
-    });
+    try {
+      const info = await this.transporter.sendMail(mailOptions);
+      console.log("email enviado com sucesso: %s", userContactTarget);
+    } catch (error) {
+      console.log(
+        "error ao enviar email: %s -- email com problema: ",
+        (error as Error).message,
+        userContactTarget
+      );
+    }
   }
 }

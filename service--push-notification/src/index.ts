@@ -4,8 +4,6 @@ import UserDataEventListener from "./transportlayer/kafka/UserDataEventListerner
 import { Kafka } from "kafkajs";
 import { config } from "./configs/configs";
 import { ClientEmailDataSourceImpl } from "./datasources/email/ClientEmailDataSourceImpl";
-import { ClientEmailDataSource } from "./datasources/email/ClientEmailDataSource";
-import { NotificationRepositoryImpl } from "./repositories/NotificationRepositoryImpl";
 import { NotificationRepository } from "./repositories/NotificationRepository";
 
 const kafka = new Kafka({
@@ -14,10 +12,8 @@ const kafka = new Kafka({
 });
 const consumer = kafka.consumer({ groupId: config.KAFKA_GROUP_ID });
 
-const emailDatasource: ClientEmailDataSource = new ClientEmailDataSourceImpl();
-
 const notificationRepository: NotificationRepository =
-  new NotificationRepositoryImpl(emailDatasource);
+  new ClientEmailDataSourceImpl();
 
 const userNotificationUseCase: UserNotificationUserCaseImpl =
   new UserNotificationUserCaseImpl(notificationRepository);
