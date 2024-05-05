@@ -1,6 +1,6 @@
 package com.thuurzz.repositories.mapper;
 
-import com.thuurzz.datasources.entities.UserEntity;
+import com.thuurzz.datasources.relational.entities.UserEntity;
 import com.thuurzz.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
